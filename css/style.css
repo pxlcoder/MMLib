@@ -1,0 +1,21 @@
+.searcher, .dataTable, .upcomingTable{
+	margin-top: 25px;
+	margin-bottom: 25px;
+}
+
+.action{
+	margin-right: 30px;
+}
+
+#actions{
+	float:right; 
+	margin-top: 10px;
+}
+
+#sbutton{
+	margin-top: 5px;
+}
+
+input[type="text"] {
+    font-size:25px
+}
