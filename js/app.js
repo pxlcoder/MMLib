@@ -15,6 +15,7 @@ $(document).ready(function() {
 		$.cookie('userlist', waitingList);
 	}else{
 		waitingList = $.cookie('userlist');
+		console.log(waitingList);
 	}
 	
 	function updateSearch(){
