@@ -47,36 +47,36 @@ $(document).ready(function() {
 	function updateSearch(){
 		var feed = new google.feeds.Feed(rootURL + "rss/hitlist/mlsathome/qu=" + $('#searchTitle').val() + "&lm=DVDALL");
 
-        feed.load(function(result) {
-            if (!result.error) {
-                titles = [];
-                years = [];
-
-                var tableData = '<thead><tr><th data-field="id">Title</th><th data-field="Year">Year</th></tr></thead><tbody>';
-				
-                for (var i = 0; i < result.feed.entries.length; i++) {
-                    tableData += "<tr>";
-                    var entry = result.feed.entries[i];
-
-                    var movieTitle = entry.title;
-                    var movieYear = entry.content.slice(entry.content.indexOf("Publication Date") + 16, entry.content.indexOf("Call Number") - 4);
-
-                    titles.push(movieTitle);
-                    years.push(movieYear);
-
-                    tableData += "<td>" + movieTitle + "</td><td>" + movieYear + "</td></tr>";
-                }
-				
-                $('.dataTable').html(tableData + "</tbody>");
-
-                $("#dataTable table tr").click(function() {
-					var selectedMovie = titles[this.rowIndex - 1];
-					if (selectedMovie !== undefined){
-						window.open(rootURL + "mlsathome/search/results?qu=" + selectedMovie + "&te=&lm=DVDALL", '_blank');
-					}
-                });
-            }
-        });
+	        feed.load(function(result) {
+	            if (!result.error) {
+	                titles = [];
+	                years = [];
+	
+	                var tableData = '<thead><tr><th data-field="id">Title</th><th data-field="Year">Year</th></tr></thead><tbody>';
+					
+	                for (var i = 0; i < result.feed.entries.length; i++) {
+	                    tableData += "<tr>";
+	                    var entry = result.feed.entries[i];
+	
+	                    var movieTitle = entry.title;
+	                    var movieYear = entry.content.slice(entry.content.indexOf("Publication Date") + 16, entry.content.indexOf("Call Number") - 4);
+	
+	                    titles.push(movieTitle);
+	                    years.push(movieYear);
+	
+	                    tableData += "<td>" + movieTitle + "</td><td>" + movieYear + "</td></tr>";
+	                }
+					
+	                $('.dataTable').html(tableData + "</tbody>");
+	
+	                $("#dataTable table tr").click(function() {
+						var selectedMovie = titles[this.rowIndex - 1];
+						if (selectedMovie !== undefined){
+							window.open(rootURL + "mlsathome/search/results?qu=" + selectedMovie + "&te=&lm=DVDALL", '_blank');
+						}
+	                });
+	            }
+	        });
 	}
 	
 	function tableHandle(titleArray){
