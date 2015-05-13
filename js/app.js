@@ -44,8 +44,6 @@ $(document).ready(function() {
 		return list;
 	}
 	
-	console.log(decodeList(encodeList(testA)));
-	
 	function updateSearch(){
 		var feed = new google.feeds.Feed(rootURL + "rss/hitlist/mlsathome/qu=" + $('#searchTitle').val() + "&lm=DVDALL");
 
