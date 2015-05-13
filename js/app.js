@@ -1,8 +1,8 @@
 google.load("feeds", "1");
 
 $(document).ready(function() {
-    var titles = [];
-    var years = [];
+    	var titles = [];
+    	var years = [];
 	var upcoming = [];
 	
 	var currentList = 'Coming Soon';
@@ -48,34 +48,34 @@ $(document).ready(function() {
 		var feed = new google.feeds.Feed(rootURL + "rss/hitlist/mlsathome/qu=" + $('#searchTitle').val() + "&lm=DVDALL");
 
 	        feed.load(function(result) {
-	            if (!result.error) {
-	                titles = [];
-	                years = [];
-	
-	                var tableData = '<thead><tr><th data-field="id">Title</th><th data-field="Year">Year</th></tr></thead><tbody>';
-					
-	                for (var i = 0; i < result.feed.entries.length; i++) {
-	                    tableData += "<tr>";
-	                    var entry = result.feed.entries[i];
-	
-	                    var movieTitle = entry.title;
-	                    var movieYear = entry.content.slice(entry.content.indexOf("Publication Date") + 16, entry.content.indexOf("Call Number") - 4);
-	
-	                    titles.push(movieTitle);
-	                    years.push(movieYear);
-	
-	                    tableData += "<td>" + movieTitle + "</td><td>" + movieYear + "</td></tr>";
-	                }
-					
-	                $('.dataTable').html(tableData + "</tbody>");
-	
-	                $("#dataTable table tr").click(function() {
-						var selectedMovie = titles[this.rowIndex - 1];
-						if (selectedMovie !== undefined){
-							window.open(rootURL + "mlsathome/search/results?qu=" + selectedMovie + "&te=&lm=DVDALL", '_blank');
-						}
-	                });
-	            }
+	   		if (!result.error) {
+		                titles = [];
+		                years = [];
+		
+		                var tableData = '<thead><tr><th data-field="id">Title</th><th data-field="Year">Year</th></tr></thead><tbody>';
+						
+		                for (var i = 0; i < result.feed.entries.length; i++) {
+		                    tableData += "<tr>";
+		                    var entry = result.feed.entries[i];
+		
+		                    var movieTitle = entry.title;
+		                    var movieYear = entry.content.slice(entry.content.indexOf("Publication Date") + 16, entry.content.indexOf("Call Number") - 4);
+		
+		                    titles.push(movieTitle);
+		                    years.push(movieYear);
+		
+		                    tableData += "<td>" + movieTitle + "</td><td>" + movieYear + "</td></tr>";
+		                }
+						
+		                $('.dataTable').html(tableData + "</tbody>");
+		
+		                $("#dataTable table tr").click(function() {
+					var selectedMovie = titles[this.rowIndex - 1];
+					if (selectedMovie !== undefined){
+						window.open(rootURL + "mlsathome/search/results?qu=" + selectedMovie + "&te=&lm=DVDALL", '_blank');
+					}
+		                });
+	        	}
 	        });
 	}
 	
@@ -88,7 +88,7 @@ $(document).ready(function() {
 				updateSearch();
 			}else{
 				titleArray.splice(this.rowIndex - 1, 1);
-				$.cookie('waitlist', encodeList(waitingList));
+				$.cookie('waitlist', encodeList(waitingList), { expires: 365 });
 				$('.upcomingTable').html(constructTable(waitingList));
 				tableHandle(waitingList);
 				removeFlag = false;
@@ -140,7 +140,7 @@ $(document).ready(function() {
 					var upcomingMovie = data.movies[0].title;
 					var releaseDate = data.movies[0].release_dates.dvd;
 					waitingList.push([upcomingMovie, releaseDate, criticsScore]);
-					$.cookie('waitlist', encodeList(waitingList));
+					$.cookie('waitlist', encodeList(waitingList), { expires: 365 });
 					if (currentList === "Waiting List"){
 						$('.upcomingTable').html(constructTable(waitingList));
 						tableHandle(waitingList);
@@ -157,7 +157,7 @@ $(document).ready(function() {
 	}
 	
 	$.ajax("http://api.rottentomatoes.com/api/public/v1.0/lists/dvds/upcoming.json", {
-        data: {
+        	data: {
 			apikey: 'mz7z7f9zm79tc3hcaw3xb85w',
 			page_limit: 50
 		},
@@ -177,10 +177,10 @@ $(document).ready(function() {
 			$('.upcomingTable').html(constructTable(upcoming));
 			
 			tableHandle(upcoming);
-        }           
+        	}           
 	});
 	
-    $('#sbutton').on('click', updateSearch);
+	$('#sbutton').on('click', updateSearch);
 	$('#swapList').on('click', swapLists);
 	$('#addTitle').on('click', addTitles);
 	$('#removeTitle').on('click', removeTitles);
