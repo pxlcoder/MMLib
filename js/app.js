@@ -11,12 +11,40 @@ $(document).ready(function() {
 	
 	var rootURL = 'http://miss.ent.sirsidynix.net/client/';
 	
-	if($.cookie("userlist") === undefined){
-		$.cookie('userlist', waitingList);
-	}else{
-		waitingList = $.cookie('userlist');
-		console.log(waitingList);
+	if($.cookie("waitlist") !== undefined){
+		waitingList = decodeList($.cookie('waitlist'));
 	}
+	
+	function encodeList(list){
+		var encoded = "";
+		for (var i = 0; i < list.length; i++){
+			for (var j = 0; j < list[i].length; j++){
+				encoded += list[i][j];
+				
+				if (j !== list[i].length - 1){
+					encoded += " ";
+				}
+			}
+			
+			if (i !== list.length - 1){
+				encoded += "|";
+			}
+		}
+		return encoded;
+	}
+	
+	function decodeList(liststring){
+		list = [];
+		templist = liststring.split("|");
+		
+		for (var i = 0; i < templist.length; i++){
+			list.push(templist[i].split(" "));
+		}
+		
+		return list;
+	}
+	
+	console.log(decodeList(encodeList(testA)));
 	
 	function updateSearch(){
 		var feed = new google.feeds.Feed(rootURL + "rss/hitlist/mlsathome/qu=" + $('#searchTitle').val() + "&lm=DVDALL");
@@ -62,7 +90,7 @@ $(document).ready(function() {
 				updateSearch();
 			}else{
 				titleArray.splice(this.rowIndex - 1, 1);
-				$.cookie('userlist', waitingList);
+				$.cookie('waitlist', encodeList(waitingList));
 				$('.upcomingTable').html(constructTable(waitingList));
 				tableHandle(waitingList);
 				removeFlag = false;
@@ -114,7 +142,7 @@ $(document).ready(function() {
 					var upcomingMovie = data.movies[0].title;
 					var releaseDate = data.movies[0].release_dates.dvd;
 					waitingList.push([upcomingMovie, releaseDate, criticsScore]);
-					$.cookie('userlist', waitingList);
+					$.cookie('waitlist', encodeList(waitingList));
 					if (currentList === "Waiting List"){
 						$('.upcomingTable').html(constructTable(waitingList));
 						tableHandle(waitingList);
