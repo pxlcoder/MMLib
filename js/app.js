@@ -22,12 +22,12 @@ $(document).ready(function() {
 				encoded += list[i][j];
 				
 				if (j !== list[i].length - 1){
-					encoded += " ";
+					encoded += "|";
 				}
 			}
 			
 			if (i !== list.length - 1){
-				encoded += "|";
+				encoded += "||";
 			}
 		}
 		return encoded;
@@ -35,10 +35,10 @@ $(document).ready(function() {
 	
 	function decodeList(liststring){
 		list = [];
-		templist = liststring.split("|");
+		templist = liststring.split("||");
 		
 		for (var i = 0; i < templist.length; i++){
-			list.push(templist[i].split(" "));
+			list.push(templist[i].split("|"));
 		}
 		
 		return list;
